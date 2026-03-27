@@ -105,3 +105,27 @@ export interface IMessageLog {
     messageId?: string;
     timestamp: string;
 }
+
+export interface IWorkflowCondition {
+    field: string;
+    operator: 'equals' | 'not_equals' | 'contains' | 'greater_than' | 'less_than';
+    value: string | number | boolean;
+}
+
+export interface IWorkflowAction {
+    type: 'send_whatsapp' | 'add_tag' | 'create_reminder';
+    config: Record<string, any>; // e.g., { templateId: '123', customMessage: 'Hi' } or { tagId: 'abc' }
+}
+
+export interface IWorkflow {
+    _id: string;
+    userId: string;
+    name: string;
+    description?: string;
+    triggerType: 'customer_created' | 'lead_created' | 'lead_converted' | 'deal_won' | 'tag_added';
+    conditions: IWorkflowCondition[];
+    actions: IWorkflowAction[];
+    isActive: boolean;
+    createdAt: string;
+    updatedAt: string;
+}

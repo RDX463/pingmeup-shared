@@ -7,6 +7,9 @@ export {
     type IReminder,
     type ITag,
     type IMessageLog,
+    type IWorkflowCondition,
+    type IWorkflowAction,
+    type IWorkflow,
 } from './types';
 
 export {
@@ -55,4 +58,9 @@ export {
     createDealSchema,
     updateDealSchema,
     dealQuerySchema,
+    workflowTriggerTypes,
+    workflowActionTypes,
+    createWorkflowSchema,
+    updateWorkflowSchema,
+    workflowQuerySchema,
 } from './schemas';

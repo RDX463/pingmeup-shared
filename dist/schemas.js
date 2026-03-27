@@ -233,3 +233,27 @@ export const dealQuerySchema = z.object({
     page: z.coerce.number().int().positive().optional().default(1),
     limit: z.coerce.number().int().positive().max(100).optional().default(20),
 });
+// Workflow validation schemas
+export const workflowTriggerTypes = ['customer_created', 'lead_created', 'lead_converted', 'deal_won', 'tag_added'];
+export const workflowActionTypes = ['send_whatsapp', 'add_tag', 'create_reminder'];
+export const createWorkflowSchema = z.object({
+    name: z.string().min(1, 'Name is required').max(150),
+    description: z.string().max(1000).optional(),
+    triggerType: z.enum(workflowTriggerTypes),
+    conditions: z.array(z.object({
+        field: z.string().min(1),
+        operator: z.enum(['equals', 'not_equals', 'contains', 'greater_than', 'less_than']),
+        value: z.union([z.string(), z.number(), z.boolean()]),
+    })).optional().default([]),
+    actions: z.array(z.object({
+        type: z.enum(workflowActionTypes),
+        config: z.record(z.string(), z.any()),
+    })).min(1, 'At least one action is required'),
+    isActive: z.boolean().optional().default(true),
+});
+export const updateWorkflowSchema = createWorkflowSchema.partial();
+export const workflowQuerySchema = z.object({
+    page: z.coerce.number().int().positive().optional().default(1),
+    limit: z.coerce.number().int().positive().max(100).optional().default(20),
+    isActive: z.boolean().optional(),
+});

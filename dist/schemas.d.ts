@@ -746,3 +746,132 @@ export declare const dealQuerySchema: z.ZodObject<{
     limit?: number | undefined;
     stageId?: string | undefined;
 }>;
+export declare const workflowTriggerTypes: readonly ["customer_created", "lead_created", "lead_converted", "deal_won", "tag_added"];
+export declare const workflowActionTypes: readonly ["send_whatsapp", "add_tag", "create_reminder"];
+export declare const createWorkflowSchema: z.ZodObject<{
+    name: z.ZodString;
+    description: z.ZodOptional<z.ZodString>;
+    triggerType: z.ZodEnum<["customer_created", "lead_created", "lead_converted", "deal_won", "tag_added"]>;
+    conditions: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodObject<{
+        field: z.ZodString;
+        operator: z.ZodEnum<["equals", "not_equals", "contains", "greater_than", "less_than"]>;
+        value: z.ZodUnion<[z.ZodString, z.ZodNumber, z.ZodBoolean]>;
+    }, "strip", z.ZodTypeAny, {
+        value: string | number | boolean;
+        field: string;
+        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
+    }, {
+        value: string | number | boolean;
+        field: string;
+        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
+    }>, "many">>>;
+    actions: z.ZodArray<z.ZodObject<{
+        type: z.ZodEnum<["send_whatsapp", "add_tag", "create_reminder"]>;
+        config: z.ZodRecord<z.ZodString, z.ZodAny>;
+    }, "strip", z.ZodTypeAny, {
+        type: "send_whatsapp" | "add_tag" | "create_reminder";
+        config: Record<string, any>;
+    }, {
+        type: "send_whatsapp" | "add_tag" | "create_reminder";
+        config: Record<string, any>;
+    }>, "many">;
+    isActive: z.ZodDefault<z.ZodOptional<z.ZodBoolean>>;
+}, "strip", z.ZodTypeAny, {
+    isActive: boolean;
+    name: string;
+    triggerType: "customer_created" | "lead_created" | "lead_converted" | "deal_won" | "tag_added";
+    conditions: {
+        value: string | number | boolean;
+        field: string;
+        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
+    }[];
+    actions: {
+        type: "send_whatsapp" | "add_tag" | "create_reminder";
+        config: Record<string, any>;
+    }[];
+    description?: string | undefined;
+}, {
+    name: string;
+    triggerType: "customer_created" | "lead_created" | "lead_converted" | "deal_won" | "tag_added";
+    actions: {
+        type: "send_whatsapp" | "add_tag" | "create_reminder";
+        config: Record<string, any>;
+    }[];
+    isActive?: boolean | undefined;
+    description?: string | undefined;
+    conditions?: {
+        value: string | number | boolean;
+        field: string;
+        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
+    }[] | undefined;
+}>;
+export declare const updateWorkflowSchema: z.ZodObject<{
+    name: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+    triggerType: z.ZodOptional<z.ZodEnum<["customer_created", "lead_created", "lead_converted", "deal_won", "tag_added"]>>;
+    conditions: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodObject<{
+        field: z.ZodString;
+        operator: z.ZodEnum<["equals", "not_equals", "contains", "greater_than", "less_than"]>;
+        value: z.ZodUnion<[z.ZodString, z.ZodNumber, z.ZodBoolean]>;
+    }, "strip", z.ZodTypeAny, {
+        value: string | number | boolean;
+        field: string;
+        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
+    }, {
+        value: string | number | boolean;
+        field: string;
+        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
+    }>, "many">>>>;
+    actions: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        type: z.ZodEnum<["send_whatsapp", "add_tag", "create_reminder"]>;
+        config: z.ZodRecord<z.ZodString, z.ZodAny>;
+    }, "strip", z.ZodTypeAny, {
+        type: "send_whatsapp" | "add_tag" | "create_reminder";
+        config: Record<string, any>;
+    }, {
+        type: "send_whatsapp" | "add_tag" | "create_reminder";
+        config: Record<string, any>;
+    }>, "many">>;
+    isActive: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodBoolean>>>;
+}, "strip", z.ZodTypeAny, {
+    isActive?: boolean | undefined;
+    name?: string | undefined;
+    description?: string | undefined;
+    triggerType?: "customer_created" | "lead_created" | "lead_converted" | "deal_won" | "tag_added" | undefined;
+    conditions?: {
+        value: string | number | boolean;
+        field: string;
+        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
+    }[] | undefined;
+    actions?: {
+        type: "send_whatsapp" | "add_tag" | "create_reminder";
+        config: Record<string, any>;
+    }[] | undefined;
+}, {
+    isActive?: boolean | undefined;
+    name?: string | undefined;
+    description?: string | undefined;
+    triggerType?: "customer_created" | "lead_created" | "lead_converted" | "deal_won" | "tag_added" | undefined;
+    conditions?: {
+        value: string | number | boolean;
+        field: string;
+        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
+    }[] | undefined;
+    actions?: {
+        type: "send_whatsapp" | "add_tag" | "create_reminder";
+        config: Record<string, any>;
+    }[] | undefined;
+}>;
+export declare const workflowQuerySchema: z.ZodObject<{
+    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
+    isActive: z.ZodOptional<z.ZodBoolean>;
+}, "strip", z.ZodTypeAny, {
+    page: number;
+    limit: number;
+    isActive?: boolean | undefined;
+}, {
+    isActive?: boolean | undefined;
+    page?: number | undefined;
+    limit?: number | undefined;
+}>;
