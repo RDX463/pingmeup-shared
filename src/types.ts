@@ -24,6 +24,7 @@ export interface ICustomer {
     passportExpiry?: string;
     visaExpiry?: string;
     notes?: string;
+    tags?: ITag[];
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
