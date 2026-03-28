@@ -1,22 +1,15 @@
 // Shared TypeScript Interfaces
+export const teamRoles = ['admin', 'manager', 'staff', 'viewer'] as const;
 
 export interface IUser {
     _id: string;
     email: string;
     agencyName: string;
     phone?: string;
-    role: 'admin' | 'user';
-    isActive: boolean;
-    timezone: string;
-    whatsappConfig?: {
-        provider: 'meta' | 'ultramsg' | 'twilio' | null;
-        accessToken?: string;
-        phoneNumberId?: string;
-        businessAccountId?: string;
-        ultramsgInstanceId?: string;
-        ultramsgToken?: string;
-    };
-    emailConfig?: IEmailConfig;
+    role: typeof teamRoles[number];
+    agencyId?: string;
+    googleRefreshToken?: string;
+    googleEmail?: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -142,7 +135,7 @@ export interface IWorkflow {
 }
 
 export interface IEmailConfig {
-    provider: 'sendgrid' | 'smtp' | 'ses' | null;
+    provider: 'sendgrid' | 'smtp' | 'ses' | 'gmail' | 'gmail_smtp' | null;
     apiKey?: string;
     host?: string;
     port?: number;
@@ -150,6 +143,9 @@ export interface IEmailConfig {
     pass?: string;
     fromEmail?: string;
     fromName?: string;
+    refreshToken?: string;
+    accessToken?: string;
+    expiryDate?: number;
 }
 
 export interface IEmailTemplate {

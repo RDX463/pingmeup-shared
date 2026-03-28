@@ -283,6 +283,18 @@ export const emailConfigSchema = z.discriminatedUnion('provider', [
         fromEmail: z.string().email('Valid from email is required'),
     }),
     z.object({
+        provider: z.literal('gmail'),
+        fromEmail: z.string().email('Valid from email is required').optional(),
+        fromName: z.string().optional(),
+    }),
+    z.object({
+        provider: z.literal('gmail_smtp'),
+        fromEmail: z.string().email('Valid from email is required'),
+        pass: z.string().min(1, 'App Password is required'),
+        user: z.string().optional(),
+        fromName: z.string().optional(),
+    }),
+    z.object({
         provider: z.literal(null),
     })
 ]);

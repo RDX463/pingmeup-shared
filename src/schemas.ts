@@ -126,7 +126,7 @@ export const activityQuerySchema = z.object({
 });
 
 // Team member validation schemas
-export const teamRoles = ['admin', 'manager', 'agent'] as const;
+export const teamRoles = ['admin', 'manager', 'staff', 'viewer'] as const;
 
 export const inviteTeamMemberSchema = z.object({
     email: z.string().email('Valid email is required'),
@@ -331,6 +331,18 @@ export const emailConfigSchema = z.discriminatedUnion('provider', [
         apiSecret: z.string().min(1, 'Secret Access Key is required'),
         region: z.string().optional().default('us-east-1'),
         fromEmail: z.string().email('Valid from email is required'),
+    }),
+    z.object({
+        provider: z.literal('gmail'),
+        fromEmail: z.string().email('Valid from email is required').optional(),
+        fromName: z.string().optional(),
+    }),
+    z.object({
+        provider: z.literal('gmail_smtp'),
+        fromEmail: z.string().email('Valid from email is required'),
+        pass: z.string().min(1, 'App Password is required'),
+        user: z.string().optional(),
+        fromName: z.string().optional(),
     }),
     z.object({
         provider: z.literal(null),

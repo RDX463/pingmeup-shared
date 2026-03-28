@@ -905,19 +905,19 @@ export declare const emailConfigSchema: z.ZodDiscriminatedUnion<"provider", [z.Z
     fromEmail: z.ZodString;
     fromName: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
-    user: string;
     provider: "smtp";
     fromEmail: string;
     host: string;
     port: number;
+    user: string;
     pass: string;
     fromName?: string | undefined;
 }, {
-    user: string;
     provider: "smtp";
     fromEmail: string;
     host: string;
     port: number;
+    user: string;
     pass: string;
     fromName?: string | undefined;
 }>, z.ZodObject<{
@@ -938,6 +938,36 @@ export declare const emailConfigSchema: z.ZodDiscriminatedUnion<"provider", [z.Z
     apiSecret: string;
     fromEmail: string;
     region?: string | undefined;
+}>, z.ZodObject<{
+    provider: z.ZodLiteral<"gmail">;
+    fromEmail: z.ZodOptional<z.ZodString>;
+    fromName: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    provider: "gmail";
+    fromEmail?: string | undefined;
+    fromName?: string | undefined;
+}, {
+    provider: "gmail";
+    fromEmail?: string | undefined;
+    fromName?: string | undefined;
+}>, z.ZodObject<{
+    provider: z.ZodLiteral<"gmail_smtp">;
+    fromEmail: z.ZodString;
+    pass: z.ZodString;
+    user: z.ZodOptional<z.ZodString>;
+    fromName: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    provider: "gmail_smtp";
+    fromEmail: string;
+    pass: string;
+    fromName?: string | undefined;
+    user?: string | undefined;
+}, {
+    provider: "gmail_smtp";
+    fromEmail: string;
+    pass: string;
+    fromName?: string | undefined;
+    user?: string | undefined;
 }>, z.ZodObject<{
     provider: z.ZodLiteral<null>;
 }, "strip", z.ZodTypeAny, {
