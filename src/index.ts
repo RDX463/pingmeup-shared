@@ -10,6 +10,9 @@ export {
     type IWorkflowCondition,
     type IWorkflowAction,
     type IWorkflow,
+    type IEmailConfig,
+    type IEmailTemplate,
+    type INotificationPreference,
 } from './types';
 
 export {
@@ -63,4 +66,8 @@ export {
     createWorkflowSchema,
     updateWorkflowSchema,
     workflowQuerySchema,
+    emailConfigSchema,
+    createEmailTemplateSchema,
+    updateEmailTemplateSchema,
+    emailTemplateQuerySchema,
 } from './schemas';

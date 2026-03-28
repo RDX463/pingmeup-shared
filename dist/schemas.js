@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const createCustomerSchema = z.object({
     fullName: z.string().min(1, 'Full name is required').max(100),
     whatsappNumber: z.string().min(1, 'WhatsApp number is required').max(20),
+    email: z.string().email('Valid email is required').optional().or(z.literal('')),
     dateOfBirth: z.string().datetime().optional().nullable(),
     anniversaryDate: z.string().datetime().optional().nullable(),
     passportNumber: z.string().max(50).optional(),
@@ -256,4 +257,45 @@ export const workflowQuerySchema = z.object({
     page: z.coerce.number().int().positive().optional().default(1),
     limit: z.coerce.number().int().positive().max(100).optional().default(20),
     isActive: z.boolean().optional(),
+});
+// Email validation schemas
+export const emailConfigSchema = z.discriminatedUnion('provider', [
+    z.object({
+        provider: z.literal('sendgrid'),
+        apiKey: z.string().min(1, 'API Key is required'),
+        fromEmail: z.string().email('Valid from email is required'),
+        fromName: z.string().optional(),
+    }),
+    z.object({
+        provider: z.literal('smtp'),
+        host: z.string().min(1, 'Host is required'),
+        port: z.coerce.number().int().positive(),
+        user: z.string().min(1, 'User is required'),
+        pass: z.string().min(1, 'Password is required'),
+        fromEmail: z.string().email('Valid from email is required'),
+        fromName: z.string().optional(),
+    }),
+    z.object({
+        provider: z.literal('ses'),
+        apiKey: z.string().min(1, 'Access Key ID is required'),
+        apiSecret: z.string().min(1, 'Secret Access Key is required'),
+        region: z.string().optional().default('us-east-1'),
+        fromEmail: z.string().email('Valid from email is required'),
+    }),
+    z.object({
+        provider: z.literal(null),
+    })
+]);
+export const createEmailTemplateSchema = z.object({
+    name: z.string().min(1, 'Template name is required').max(100),
+    subject: z.string().min(1, 'Subject is required').max(200),
+    type: z.enum(templateTypes),
+    content: z.string().min(1, 'Content is required'),
+    isDefault: z.boolean().optional().default(false),
+});
+export const updateEmailTemplateSchema = createEmailTemplateSchema.partial();
+export const emailTemplateQuerySchema = z.object({
+    type: z.enum(templateTypes).optional(),
+    page: z.coerce.number().int().positive().optional().default(1),
+    limit: z.coerce.number().int().positive().max(100).optional().default(50),
 });

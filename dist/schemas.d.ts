@@ -2,6 +2,7 @@ import { z } from 'zod';
 export declare const createCustomerSchema: z.ZodObject<{
     fullName: z.ZodString;
     whatsappNumber: z.ZodString;
+    email: z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>;
     dateOfBirth: z.ZodNullable<z.ZodOptional<z.ZodString>>;
     anniversaryDate: z.ZodNullable<z.ZodOptional<z.ZodString>>;
     passportNumber: z.ZodOptional<z.ZodString>;
@@ -14,6 +15,7 @@ export declare const createCustomerSchema: z.ZodObject<{
     fullName: string;
     whatsappNumber: string;
     isActive: boolean;
+    email?: string | undefined;
     dateOfBirth?: string | null | undefined;
     anniversaryDate?: string | null | undefined;
     passportNumber?: string | undefined;
@@ -24,6 +26,7 @@ export declare const createCustomerSchema: z.ZodObject<{
 }, {
     fullName: string;
     whatsappNumber: string;
+    email?: string | undefined;
     dateOfBirth?: string | null | undefined;
     anniversaryDate?: string | null | undefined;
     passportNumber?: string | undefined;
@@ -36,6 +39,7 @@ export declare const createCustomerSchema: z.ZodObject<{
 export declare const updateCustomerSchema: z.ZodObject<{
     fullName: z.ZodOptional<z.ZodString>;
     whatsappNumber: z.ZodOptional<z.ZodString>;
+    email: z.ZodOptional<z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>>;
     dateOfBirth: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
     anniversaryDate: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
     passportNumber: z.ZodOptional<z.ZodOptional<z.ZodString>>;
@@ -45,6 +49,7 @@ export declare const updateCustomerSchema: z.ZodObject<{
     notes: z.ZodOptional<z.ZodOptional<z.ZodString>>;
     isActive: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodBoolean>>>;
 }, "strip", z.ZodTypeAny, {
+    email?: string | undefined;
     fullName?: string | undefined;
     whatsappNumber?: string | undefined;
     dateOfBirth?: string | null | undefined;
@@ -56,6 +61,7 @@ export declare const updateCustomerSchema: z.ZodObject<{
     notes?: string | undefined;
     isActive?: boolean | undefined;
 }, {
+    email?: string | undefined;
     fullName?: string | undefined;
     whatsappNumber?: string | undefined;
     dateOfBirth?: string | null | undefined;
@@ -155,12 +161,12 @@ export declare const reminderQuerySchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     page: number;
     limit: number;
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
     status?: "scheduled" | "sent" | "failed" | "cancelled" | undefined;
+    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
     days?: number | undefined;
 }, {
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
     status?: "scheduled" | "sent" | "failed" | "cancelled" | undefined;
+    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
     page?: number | undefined;
     limit?: number | undefined;
     days?: number | undefined;
@@ -305,12 +311,12 @@ export declare const createActivitySchema: z.ZodObject<{
     content: z.ZodString;
     metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
 }, "strip", z.ZodTypeAny, {
-    type: "message" | "note" | "call" | "email" | "reminder" | "status_change";
+    type: "email" | "message" | "note" | "call" | "reminder" | "status_change";
     customerId: string;
     content: string;
     metadata?: Record<string, any> | undefined;
 }, {
-    type: "message" | "note" | "call" | "email" | "reminder" | "status_change";
+    type: "email" | "message" | "note" | "call" | "reminder" | "status_change";
     customerId: string;
     content: string;
     metadata?: Record<string, any> | undefined;
@@ -323,10 +329,10 @@ export declare const activityQuerySchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     page: number;
     limit: number;
-    type?: "message" | "note" | "call" | "email" | "reminder" | "status_change" | undefined;
+    type?: "email" | "message" | "note" | "call" | "reminder" | "status_change" | undefined;
     customerId?: string | undefined;
 }, {
-    type?: "message" | "note" | "call" | "email" | "reminder" | "status_change" | undefined;
+    type?: "email" | "message" | "note" | "call" | "reminder" | "status_change" | undefined;
     page?: number | undefined;
     limit?: number | undefined;
     customerId?: string | undefined;
@@ -338,13 +344,13 @@ export declare const inviteTeamMemberSchema: z.ZodObject<{
     role: z.ZodEnum<["admin", "manager", "agent"]>;
     permissions: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
 }, "strip", z.ZodTypeAny, {
-    name: string;
     email: string;
+    name: string;
     role: "admin" | "manager" | "agent";
     permissions?: string[] | undefined;
 }, {
-    name: string;
     email: string;
+    name: string;
     role: "admin" | "manager" | "agent";
     permissions?: string[] | undefined;
 }>;
@@ -602,15 +608,15 @@ export declare const createLeadSchema: z.ZodObject<{
     fullName: string;
     whatsappNumber: string;
     status: "new" | "contacted" | "qualified" | "converted" | "lost";
-    notes?: string | undefined;
     email?: string | null | undefined;
+    notes?: string | undefined;
     source?: string | undefined;
 }, {
     fullName: string;
     whatsappNumber: string;
-    notes?: string | undefined;
-    status?: "new" | "contacted" | "qualified" | "converted" | "lost" | undefined;
     email?: string | null | undefined;
+    status?: "new" | "contacted" | "qualified" | "converted" | "lost" | undefined;
+    notes?: string | undefined;
     source?: string | undefined;
 }>;
 export declare const updateLeadSchema: z.ZodObject<{
@@ -621,18 +627,18 @@ export declare const updateLeadSchema: z.ZodObject<{
     source: z.ZodOptional<z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>>;
     notes: z.ZodOptional<z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>>;
 }, "strip", z.ZodTypeAny, {
+    email?: string | null | undefined;
     fullName?: string | undefined;
     whatsappNumber?: string | undefined;
-    notes?: string | undefined;
     status?: "new" | "contacted" | "qualified" | "converted" | "lost" | undefined;
-    email?: string | null | undefined;
+    notes?: string | undefined;
     source?: string | undefined;
 }, {
+    email?: string | null | undefined;
     fullName?: string | undefined;
     whatsappNumber?: string | undefined;
-    notes?: string | undefined;
     status?: "new" | "contacted" | "qualified" | "converted" | "lost" | undefined;
-    email?: string | null | undefined;
+    notes?: string | undefined;
     source?: string | undefined;
 }>;
 export declare const leadQuerySchema: z.ZodObject<{
@@ -715,8 +721,8 @@ export declare const updateDealSchema: z.ZodObject<{
     expectedCloseDate: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodLiteral<"">]>>>>;
     notes: z.ZodOptional<z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>>;
 }, "strip", z.ZodTypeAny, {
-    notes?: string | undefined;
     value?: number | undefined;
+    notes?: string | undefined;
     customerId?: string | null | undefined;
     title?: string | undefined;
     currency?: string | undefined;
@@ -724,8 +730,8 @@ export declare const updateDealSchema: z.ZodObject<{
     leadId?: string | null | undefined;
     expectedCloseDate?: string | null | undefined;
 }, {
-    notes?: string | undefined;
     value?: number | undefined;
+    notes?: string | undefined;
     customerId?: string | null | undefined;
     title?: string | undefined;
     currency?: string | undefined;
@@ -872,6 +878,121 @@ export declare const workflowQuerySchema: z.ZodObject<{
     isActive?: boolean | undefined;
 }, {
     isActive?: boolean | undefined;
+    page?: number | undefined;
+    limit?: number | undefined;
+}>;
+export declare const emailConfigSchema: z.ZodDiscriminatedUnion<"provider", [z.ZodObject<{
+    provider: z.ZodLiteral<"sendgrid">;
+    apiKey: z.ZodString;
+    fromEmail: z.ZodString;
+    fromName: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    provider: "sendgrid";
+    apiKey: string;
+    fromEmail: string;
+    fromName?: string | undefined;
+}, {
+    provider: "sendgrid";
+    apiKey: string;
+    fromEmail: string;
+    fromName?: string | undefined;
+}>, z.ZodObject<{
+    provider: z.ZodLiteral<"smtp">;
+    host: z.ZodString;
+    port: z.ZodNumber;
+    user: z.ZodString;
+    pass: z.ZodString;
+    fromEmail: z.ZodString;
+    fromName: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    user: string;
+    provider: "smtp";
+    fromEmail: string;
+    host: string;
+    port: number;
+    pass: string;
+    fromName?: string | undefined;
+}, {
+    user: string;
+    provider: "smtp";
+    fromEmail: string;
+    host: string;
+    port: number;
+    pass: string;
+    fromName?: string | undefined;
+}>, z.ZodObject<{
+    provider: z.ZodLiteral<"ses">;
+    apiKey: z.ZodString;
+    apiSecret: z.ZodString;
+    region: z.ZodDefault<z.ZodOptional<z.ZodString>>;
+    fromEmail: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    provider: "ses";
+    apiKey: string;
+    apiSecret: string;
+    fromEmail: string;
+    region: string;
+}, {
+    provider: "ses";
+    apiKey: string;
+    apiSecret: string;
+    fromEmail: string;
+    region?: string | undefined;
+}>, z.ZodObject<{
+    provider: z.ZodLiteral<null>;
+}, "strip", z.ZodTypeAny, {
+    provider: null;
+}, {
+    provider: null;
+}>]>;
+export declare const createEmailTemplateSchema: z.ZodObject<{
+    name: z.ZodString;
+    subject: z.ZodString;
+    type: z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>;
+    content: z.ZodString;
+    isDefault: z.ZodDefault<z.ZodOptional<z.ZodBoolean>>;
+}, "strip", z.ZodTypeAny, {
+    type: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom";
+    name: string;
+    content: string;
+    isDefault: boolean;
+    subject: string;
+}, {
+    type: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom";
+    name: string;
+    content: string;
+    subject: string;
+    isDefault?: boolean | undefined;
+}>;
+export declare const updateEmailTemplateSchema: z.ZodObject<{
+    name: z.ZodOptional<z.ZodString>;
+    subject: z.ZodOptional<z.ZodString>;
+    type: z.ZodOptional<z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>>;
+    content: z.ZodOptional<z.ZodString>;
+    isDefault: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodBoolean>>>;
+}, "strip", z.ZodTypeAny, {
+    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
+    name?: string | undefined;
+    content?: string | undefined;
+    isDefault?: boolean | undefined;
+    subject?: string | undefined;
+}, {
+    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
+    name?: string | undefined;
+    content?: string | undefined;
+    isDefault?: boolean | undefined;
+    subject?: string | undefined;
+}>;
+export declare const emailTemplateQuerySchema: z.ZodObject<{
+    type: z.ZodOptional<z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
+}, "strip", z.ZodTypeAny, {
+    page: number;
+    limit: number;
+    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
+}, {
+    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
     page?: number | undefined;
     limit?: number | undefined;
 }>;

@@ -8,6 +8,15 @@ export interface IUser {
     role: 'admin' | 'user';
     isActive: boolean;
     timezone: string;
+    whatsappConfig?: {
+        provider: 'meta' | 'ultramsg' | 'twilio' | null;
+        accessToken?: string;
+        phoneNumberId?: string;
+        businessAccountId?: string;
+        ultramsgInstanceId?: string;
+        ultramsgToken?: string;
+    };
+    emailConfig?: IEmailConfig;
     createdAt: string;
     updatedAt: string;
 }
@@ -17,6 +26,7 @@ export interface ICustomer {
     userId: string;
     fullName: string;
     whatsappNumber: string;
+    email?: string;
     dateOfBirth?: string;
     anniversaryDate?: string;
     passportNumber?: string;
@@ -129,4 +139,36 @@ export interface IWorkflow {
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
+}
+
+export interface IEmailConfig {
+    provider: 'sendgrid' | 'smtp' | 'ses' | null;
+    apiKey?: string;
+    host?: string;
+    port?: number;
+    user?: string;
+    pass?: string;
+    fromEmail?: string;
+    fromName?: string;
+}
+
+export interface IEmailTemplate {
+    _id: string;
+    userId: string;
+    name: string;
+    subject: string;
+    content: string; // HTML or text
+    type: 'birthday' | 'anniversary' | 'passport_expiry' | 'visa_expiry' | 'trip' | 'custom';
+    isDefault: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface INotificationPreference {
+    _id: string;
+    userId: string;
+    reminderType: string;
+    channels: ('whatsapp' | 'email' | 'in_app')[];
+    quietHoursStart?: string; // HH:mm
+    quietHoursEnd?: string; // HH:mm
 }
