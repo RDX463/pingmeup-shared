@@ -10,9 +10,19 @@ export {
     type IWorkflowCondition,
     type IWorkflowAction,
     type IWorkflow,
+    type ICustomerActivity,
+    type ICustomerGroup,
+    type IBroadcast,
+    type ISavedReport,
+    type ITeamMember,
+    type ITeamInvite,
     type IEmailConfig,
     type IEmailTemplate,
     type INotificationPreference,
+    type IWebhookSubscription,
+    type IWhatsappConfig,
+    type ICloudinaryConfig,
+    type TeamRole,
 } from './types';
 
 export {
@@ -70,4 +80,6 @@ export {
     createEmailTemplateSchema,
     updateEmailTemplateSchema,
     emailTemplateQuerySchema,
+    createWebhookSchema,
+    updateWebhookSchema,
 } from './schemas';

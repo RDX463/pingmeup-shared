@@ -1,12 +1,53 @@
+export declare const teamRoles: readonly ["admin", "manager", "staff", "viewer"];
+export type TeamRole = typeof teamRoles[number];
+export interface IWhatsappConfig {
+    provider: 'twilio' | 'meta' | 'ultramsg' | null;
+    accountSid?: string;
+    authToken?: string;
+    phoneNumber?: string;
+    accessToken?: string;
+    phoneNumberId?: string;
+    businessAccountId?: string;
+    ultramsgInstanceId?: string;
+    ultramsgToken?: string;
+}
+export interface IEmailConfig {
+    provider: 'sendgrid' | 'smtp' | 'ses' | 'gmail' | 'gmail_smtp' | null;
+    apiKey?: string;
+    host?: string;
+    port?: number;
+    user?: string;
+    pass?: string;
+    region?: string;
+    apiSecret?: string;
+    fromEmail?: string;
+    fromName?: string;
+    accessToken?: string;
+    refreshToken?: string;
+    expiryDate?: number;
+}
+export interface ICloudinaryConfig {
+    cloudName: string;
+    apiKey: string;
+    apiSecret: string;
+}
 export interface IUser {
     _id: string;
     email: string;
     agencyName: string;
-    phone?: string;
-    role: 'admin' | 'staff';
+    phone: string;
+    timezone: string;
+    role: TeamRole;
     agencyId?: string;
-    googleRefreshToken?: string;
-    googleEmail?: string;
+    expoPushToken?: string;
+    whatsappConfig: IWhatsappConfig;
+    emailConfig: IEmailConfig;
+    subscription: {
+        plan: 'free' | 'basic' | 'premium' | 'enterprise';
+        status: 'active' | 'inactive' | 'cancelled';
+        expiresAt?: string;
+    };
+    cloudinaryConfig?: ICloudinaryConfig;
     createdAt: string;
     updatedAt: string;
 }
@@ -28,6 +69,41 @@ export interface ICustomer {
     createdAt: string;
     updatedAt: string;
 }
+export interface ITag {
+    _id: string;
+    userId: string;
+    name: string;
+    color: string;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ICustomerActivity {
+    _id: string;
+    userId: string;
+    customerId: string;
+    type: 'note' | 'call' | 'email' | 'message' | 'reminder' | 'status_change';
+    content: string;
+    metadata?: Record<string, string | number | boolean | undefined>;
+    createdBy?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ICustomerGroup {
+    _id: string;
+    userId: string;
+    name: string;
+    type: 'static' | 'dynamic';
+    customerIds: string[];
+    filters?: {
+        tagIds?: string[];
+        passportExpiryWithin?: number;
+        visaExpiryWithin?: number;
+        hasAnniversaryWithin?: number;
+        isBirthdayWithin?: number;
+    };
+    createdAt: string;
+    updatedAt: string;
+}
 export interface ILead {
     _id: string;
     userId: string;
@@ -37,6 +113,7 @@ export interface ILead {
     status: 'new' | 'contacted' | 'qualified' | 'converted' | 'lost';
     source?: string;
     notes?: string;
+    convertedAt?: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -46,7 +123,7 @@ export interface IDeal {
     title: string;
     value: number;
     currency: string;
-    stageId: string | any;
+    stageId: string;
     leadId?: string;
     customerId?: string;
     expectedCloseDate?: string;
@@ -67,7 +144,7 @@ export interface IPipelineStage {
 export interface IReminder {
     _id: string;
     userId: string;
-    customerId: string | any;
+    customerId: string;
     type: 'birthday' | 'anniversary' | 'passport_expiry' | 'visa_expiry' | 'trip' | 'custom';
     title: string;
     triggerDate: string;
@@ -80,21 +157,14 @@ export interface IReminder {
     createdAt: string;
     updatedAt: string;
 }
-export interface ITag {
-    _id: string;
-    userId: string;
-    name: string;
-    color: string;
-    createdAt: string;
-    updatedAt: string;
-}
 export interface IMessageLog {
     _id: string;
     userId: string;
     customerId: string;
+    phoneNumber: string;
     message: string;
     direction: 'inbound' | 'outbound';
-    status: 'sent' | 'delivered' | 'read' | 'failed' | 'received';
+    status: 'pending' | 'sent' | 'delivered' | 'read' | 'failed' | 'received';
     provider: 'meta' | 'ultramsg';
     messageId?: string;
     timestamp: string;
@@ -105,8 +175,8 @@ export interface IWorkflowCondition {
     value: string | number | boolean;
 }
 export interface IWorkflowAction {
-    type: 'send_whatsapp' | 'add_tag' | 'create_reminder';
-    config: Record<string, any>;
+    type: 'send_whatsapp' | 'send_email' | 'add_tag' | 'create_reminder';
+    config: Record<string, string | number | boolean | undefined>;
 }
 export interface IWorkflow {
     _id: string;
@@ -119,19 +189,6 @@ export interface IWorkflow {
     isActive: boolean;
     createdAt: string;
     updatedAt: string;
-}
-export interface IEmailConfig {
-    provider: 'sendgrid' | 'smtp' | 'ses' | 'gmail' | 'gmail_smtp' | null;
-    apiKey?: string;
-    host?: string;
-    port?: number;
-    user?: string;
-    pass?: string;
-    fromEmail?: string;
-    fromName?: string;
-    refreshToken?: string;
-    accessToken?: string;
-    expiryDate?: number;
 }
 export interface IEmailTemplate {
     _id: string;
@@ -151,4 +208,75 @@ export interface INotificationPreference {
     channels: ('whatsapp' | 'email' | 'in_app')[];
     quietHoursStart?: string;
     quietHoursEnd?: string;
+}
+export interface IWebhookSubscription {
+    _id: string;
+    userId: string;
+    targetUrl: string;
+    events: string[];
+    isActive: boolean;
+    secretKey?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface IBroadcast {
+    _id: string;
+    userId: string;
+    title: string;
+    message?: string;
+    mediaUrl?: string;
+    mediaType?: 'image' | 'video' | 'document';
+    templateName?: string;
+    languageCode?: string;
+    totalRecipients: number;
+    sentCount: number;
+    failedCount: number;
+    status: 'draft' | 'sending' | 'completed' | 'failed';
+    scheduledAt?: string;
+    startedAt?: string;
+    completedAt?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ISavedReport {
+    _id: string;
+    userId: string;
+    name: string;
+    description?: string;
+    entityType: 'customers' | 'leads' | 'deals';
+    metrics: string[];
+    filters: {
+        field: string;
+        operator: 'equals' | 'contains' | 'greater_than' | 'less_than' | 'not_equals';
+        value: any;
+    }[];
+    groupBy?: string;
+    sortBy?: string;
+    sortOrder?: 'asc' | 'desc';
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ITeamMember {
+    _id: string;
+    userId: string;
+    email: string;
+    name: string;
+    role: 'admin' | 'manager' | 'agent';
+    permissions: string[];
+    isActive: boolean;
+    lastLoginAt?: string;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ITeamInvite {
+    _id: string;
+    email: string;
+    agencyId: string;
+    invitedBy: string;
+    role: 'admin' | 'manager' | 'staff' | 'viewer';
+    token: string;
+    expiresAt: string;
+    status: 'pending' | 'accepted' | 'expired';
+    createdAt: string;
+    updatedAt: string;
 }

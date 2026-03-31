@@ -11,31 +11,7 @@ export declare const createCustomerSchema: z.ZodObject<{
     visaExpiry: z.ZodNullable<z.ZodOptional<z.ZodString>>;
     notes: z.ZodOptional<z.ZodString>;
     isActive: z.ZodDefault<z.ZodOptional<z.ZodBoolean>>;
-}, "strip", z.ZodTypeAny, {
-    fullName: string;
-    whatsappNumber: string;
-    isActive: boolean;
-    email?: string | undefined;
-    dateOfBirth?: string | null | undefined;
-    anniversaryDate?: string | null | undefined;
-    passportNumber?: string | undefined;
-    visaNumber?: string | undefined;
-    passportExpiry?: string | null | undefined;
-    visaExpiry?: string | null | undefined;
-    notes?: string | undefined;
-}, {
-    fullName: string;
-    whatsappNumber: string;
-    email?: string | undefined;
-    dateOfBirth?: string | null | undefined;
-    anniversaryDate?: string | null | undefined;
-    passportNumber?: string | undefined;
-    visaNumber?: string | undefined;
-    passportExpiry?: string | null | undefined;
-    visaExpiry?: string | null | undefined;
-    notes?: string | undefined;
-    isActive?: boolean | undefined;
-}>;
+}, z.core.$strip>;
 export declare const updateCustomerSchema: z.ZodObject<{
     fullName: z.ZodOptional<z.ZodString>;
     whatsappNumber: z.ZodOptional<z.ZodString>;
@@ -48,641 +24,341 @@ export declare const updateCustomerSchema: z.ZodObject<{
     visaExpiry: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodString>>>;
     notes: z.ZodOptional<z.ZodOptional<z.ZodString>>;
     isActive: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodBoolean>>>;
-}, "strip", z.ZodTypeAny, {
-    email?: string | undefined;
-    fullName?: string | undefined;
-    whatsappNumber?: string | undefined;
-    dateOfBirth?: string | null | undefined;
-    anniversaryDate?: string | null | undefined;
-    passportNumber?: string | undefined;
-    visaNumber?: string | undefined;
-    passportExpiry?: string | null | undefined;
-    visaExpiry?: string | null | undefined;
-    notes?: string | undefined;
-    isActive?: boolean | undefined;
-}, {
-    email?: string | undefined;
-    fullName?: string | undefined;
-    whatsappNumber?: string | undefined;
-    dateOfBirth?: string | null | undefined;
-    anniversaryDate?: string | null | undefined;
-    passportNumber?: string | undefined;
-    visaNumber?: string | undefined;
-    passportExpiry?: string | null | undefined;
-    visaExpiry?: string | null | undefined;
-    notes?: string | undefined;
-    isActive?: boolean | undefined;
-}>;
+}, z.core.$strip>;
 export declare const customerQuerySchema: z.ZodObject<{
     search: z.ZodOptional<z.ZodString>;
     tagId: z.ZodOptional<z.ZodString>;
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    search?: string | undefined;
-    tagId?: string | undefined;
-}, {
-    search?: string | undefined;
-    tagId?: string | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
-}>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
 export declare const reminderTypes: readonly ["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"];
 export declare const createReminderSchema: z.ZodObject<{
     customerId: z.ZodString;
-    type: z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>;
+    type: z.ZodEnum<{
+        birthday: "birthday";
+        anniversary: "anniversary";
+        passport_expiry: "passport_expiry";
+        visa_expiry: "visa_expiry";
+        trip: "trip";
+        custom: "custom";
+    }>;
     title: z.ZodString;
     triggerDate: z.ZodString;
     daysBefore: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
     templateId: z.ZodOptional<z.ZodString>;
     customMessage: z.ZodOptional<z.ZodString>;
-    recurrence: z.ZodDefault<z.ZodOptional<z.ZodEnum<["none", "daily", "weekly", "monthly", "yearly"]>>>;
-    notificationChannels: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
-}, "strip", z.ZodTypeAny, {
-    type: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom";
-    customerId: string;
-    title: string;
-    triggerDate: string;
-    daysBefore: number;
-    recurrence: "none" | "daily" | "weekly" | "monthly" | "yearly";
-    notificationChannels: string[];
-    templateId?: string | undefined;
-    customMessage?: string | undefined;
-}, {
-    type: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom";
-    customerId: string;
-    title: string;
-    triggerDate: string;
-    daysBefore?: number | undefined;
-    templateId?: string | undefined;
-    customMessage?: string | undefined;
-    recurrence?: "none" | "daily" | "weekly" | "monthly" | "yearly" | undefined;
-    notificationChannels?: string[] | undefined;
-}>;
+    recurrence: z.ZodDefault<z.ZodOptional<z.ZodEnum<{
+        none: "none";
+        daily: "daily";
+        weekly: "weekly";
+        monthly: "monthly";
+        yearly: "yearly";
+    }>>>;
+    notificationChannels: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>;
+}, z.core.$strip>;
 export declare const updateReminderSchema: z.ZodObject<{
     customerId: z.ZodOptional<z.ZodString>;
-    type: z.ZodOptional<z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>>;
+    type: z.ZodOptional<z.ZodEnum<{
+        birthday: "birthday";
+        anniversary: "anniversary";
+        passport_expiry: "passport_expiry";
+        visa_expiry: "visa_expiry";
+        trip: "trip";
+        custom: "custom";
+    }>>;
     title: z.ZodOptional<z.ZodString>;
     triggerDate: z.ZodOptional<z.ZodString>;
     daysBefore: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodNumber>>>;
     templateId: z.ZodOptional<z.ZodOptional<z.ZodString>>;
     customMessage: z.ZodOptional<z.ZodOptional<z.ZodString>>;
-    recurrence: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodEnum<["none", "daily", "weekly", "monthly", "yearly"]>>>>;
-    notificationChannels: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>>;
-}, "strip", z.ZodTypeAny, {
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    customerId?: string | undefined;
-    title?: string | undefined;
-    triggerDate?: string | undefined;
-    daysBefore?: number | undefined;
-    templateId?: string | undefined;
-    customMessage?: string | undefined;
-    recurrence?: "none" | "daily" | "weekly" | "monthly" | "yearly" | undefined;
-    notificationChannels?: string[] | undefined;
-}, {
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    customerId?: string | undefined;
-    title?: string | undefined;
-    triggerDate?: string | undefined;
-    daysBefore?: number | undefined;
-    templateId?: string | undefined;
-    customMessage?: string | undefined;
-    recurrence?: "none" | "daily" | "weekly" | "monthly" | "yearly" | undefined;
-    notificationChannels?: string[] | undefined;
-}>;
+    recurrence: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodEnum<{
+        none: "none";
+        daily: "daily";
+        weekly: "weekly";
+        monthly: "monthly";
+        yearly: "yearly";
+    }>>>>;
+    notificationChannels: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>>;
+}, z.core.$strip>;
 export declare const reminderQuerySchema: z.ZodObject<{
-    status: z.ZodOptional<z.ZodEnum<["scheduled", "sent", "failed", "cancelled"]>>;
-    type: z.ZodOptional<z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>>;
-    days: z.ZodOptional<z.ZodNumber>;
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    status?: "scheduled" | "sent" | "failed" | "cancelled" | undefined;
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    days?: number | undefined;
-}, {
-    status?: "scheduled" | "sent" | "failed" | "cancelled" | undefined;
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
-    days?: number | undefined;
-}>;
+    status: z.ZodOptional<z.ZodEnum<{
+        cancelled: "cancelled";
+        scheduled: "scheduled";
+        sent: "sent";
+        failed: "failed";
+    }>>;
+    type: z.ZodOptional<z.ZodEnum<{
+        birthday: "birthday";
+        anniversary: "anniversary";
+        passport_expiry: "passport_expiry";
+        visa_expiry: "visa_expiry";
+        trip: "trip";
+        custom: "custom";
+    }>>;
+    days: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
 export declare const createBroadcastSchema: z.ZodObject<{
     title: z.ZodOptional<z.ZodString>;
     message: z.ZodOptional<z.ZodString>;
     mediaUrl: z.ZodOptional<z.ZodString>;
     mediaType: z.ZodOptional<z.ZodString>;
-    customerIds: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    customerIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     groupId: z.ZodOptional<z.ZodString>;
     sendNow: z.ZodDefault<z.ZodOptional<z.ZodBoolean>>;
     templateName: z.ZodOptional<z.ZodString>;
     languageCode: z.ZodDefault<z.ZodOptional<z.ZodString>>;
-    templateComponents: z.ZodOptional<z.ZodArray<z.ZodAny, "many">>;
-}, "strip", z.ZodTypeAny, {
-    sendNow: boolean;
-    languageCode: string;
-    message?: string | undefined;
-    title?: string | undefined;
-    mediaUrl?: string | undefined;
-    mediaType?: string | undefined;
-    customerIds?: string[] | undefined;
-    groupId?: string | undefined;
-    templateName?: string | undefined;
-    templateComponents?: any[] | undefined;
-}, {
-    message?: string | undefined;
-    title?: string | undefined;
-    mediaUrl?: string | undefined;
-    mediaType?: string | undefined;
-    customerIds?: string[] | undefined;
-    groupId?: string | undefined;
-    sendNow?: boolean | undefined;
-    templateName?: string | undefined;
-    languageCode?: string | undefined;
-    templateComponents?: any[] | undefined;
-}>;
+    templateComponents: z.ZodOptional<z.ZodArray<z.ZodAny>>;
+}, z.core.$strip>;
 export declare const broadcastQuerySchema: z.ZodObject<{
-    status: z.ZodOptional<z.ZodEnum<["draft", "sending", "completed", "failed"]>>;
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    status?: "failed" | "draft" | "sending" | "completed" | undefined;
-}, {
-    status?: "failed" | "draft" | "sending" | "completed" | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
-}>;
+    status: z.ZodOptional<z.ZodEnum<{
+        failed: "failed";
+        draft: "draft";
+        sending: "sending";
+        completed: "completed";
+    }>>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
 export declare const templateTypes: readonly ["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"];
 export declare const createTemplateSchema: z.ZodObject<{
     name: z.ZodString;
-    type: z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>;
+    type: z.ZodEnum<{
+        birthday: "birthday";
+        anniversary: "anniversary";
+        passport_expiry: "passport_expiry";
+        visa_expiry: "visa_expiry";
+        trip: "trip";
+        custom: "custom";
+    }>;
     content: z.ZodString;
     isDefault: z.ZodDefault<z.ZodOptional<z.ZodBoolean>>;
-}, "strip", z.ZodTypeAny, {
-    type: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom";
-    name: string;
-    content: string;
-    isDefault: boolean;
-}, {
-    type: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom";
-    name: string;
-    content: string;
-    isDefault?: boolean | undefined;
-}>;
+}, z.core.$strip>;
 export declare const updateTemplateSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
-    type: z.ZodOptional<z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>>;
+    type: z.ZodOptional<z.ZodEnum<{
+        birthday: "birthday";
+        anniversary: "anniversary";
+        passport_expiry: "passport_expiry";
+        visa_expiry: "visa_expiry";
+        trip: "trip";
+        custom: "custom";
+    }>>;
     content: z.ZodOptional<z.ZodString>;
     isDefault: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodBoolean>>>;
-}, "strip", z.ZodTypeAny, {
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    name?: string | undefined;
-    content?: string | undefined;
-    isDefault?: boolean | undefined;
-}, {
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    name?: string | undefined;
-    content?: string | undefined;
-    isDefault?: boolean | undefined;
-}>;
+}, z.core.$strip>;
 export declare const templateQuerySchema: z.ZodObject<{
-    type: z.ZodOptional<z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>>;
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-}, {
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
-}>;
+    type: z.ZodOptional<z.ZodEnum<{
+        birthday: "birthday";
+        anniversary: "anniversary";
+        passport_expiry: "passport_expiry";
+        visa_expiry: "visa_expiry";
+        trip: "trip";
+        custom: "custom";
+    }>>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
 export declare const createTagSchema: z.ZodObject<{
     name: z.ZodString;
     color: z.ZodDefault<z.ZodOptional<z.ZodString>>;
-}, "strip", z.ZodTypeAny, {
-    name: string;
-    color: string;
-}, {
-    name: string;
-    color?: string | undefined;
-}>;
+}, z.core.$strip>;
 export declare const updateTagSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
     color: z.ZodOptional<z.ZodString>;
-}, "strip", z.ZodTypeAny, {
-    name?: string | undefined;
-    color?: string | undefined;
-}, {
-    name?: string | undefined;
-    color?: string | undefined;
-}>;
+}, z.core.$strip>;
 export declare const tagQuerySchema: z.ZodObject<{
     search: z.ZodOptional<z.ZodString>;
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    search?: string | undefined;
-}, {
-    search?: string | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
-}>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
 export declare const assignTagSchema: z.ZodObject<{
     tagId: z.ZodString;
-}, "strip", z.ZodTypeAny, {
-    tagId: string;
-}, {
-    tagId: string;
-}>;
+}, z.core.$strip>;
 export declare const activityTypes: readonly ["note", "call", "email", "message", "reminder", "status_change"];
 export declare const createActivitySchema: z.ZodObject<{
     customerId: z.ZodString;
-    type: z.ZodEnum<["note", "call", "email", "message", "reminder", "status_change"]>;
+    type: z.ZodEnum<{
+        note: "note";
+        call: "call";
+        email: "email";
+        message: "message";
+        reminder: "reminder";
+        status_change: "status_change";
+    }>;
     content: z.ZodString;
     metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
-}, "strip", z.ZodTypeAny, {
-    type: "email" | "message" | "note" | "call" | "reminder" | "status_change";
-    customerId: string;
-    content: string;
-    metadata?: Record<string, any> | undefined;
-}, {
-    type: "email" | "message" | "note" | "call" | "reminder" | "status_change";
-    customerId: string;
-    content: string;
-    metadata?: Record<string, any> | undefined;
-}>;
+}, z.core.$strip>;
 export declare const activityQuerySchema: z.ZodObject<{
     customerId: z.ZodOptional<z.ZodString>;
-    type: z.ZodOptional<z.ZodEnum<["note", "call", "email", "message", "reminder", "status_change"]>>;
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    type?: "email" | "message" | "note" | "call" | "reminder" | "status_change" | undefined;
-    customerId?: string | undefined;
-}, {
-    type?: "email" | "message" | "note" | "call" | "reminder" | "status_change" | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
-    customerId?: string | undefined;
-}>;
-export declare const teamRoles: readonly ["admin", "manager", "agent"];
+    type: z.ZodOptional<z.ZodEnum<{
+        note: "note";
+        call: "call";
+        email: "email";
+        message: "message";
+        reminder: "reminder";
+        status_change: "status_change";
+    }>>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
+export declare const teamRoles: readonly ["admin", "manager", "staff", "viewer"];
 export declare const inviteTeamMemberSchema: z.ZodObject<{
     email: z.ZodString;
     name: z.ZodString;
-    role: z.ZodEnum<["admin", "manager", "agent"]>;
-    permissions: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
-}, "strip", z.ZodTypeAny, {
-    email: string;
-    name: string;
-    role: "admin" | "manager" | "agent";
-    permissions?: string[] | undefined;
-}, {
-    email: string;
-    name: string;
-    role: "admin" | "manager" | "agent";
-    permissions?: string[] | undefined;
-}>;
+    role: z.ZodEnum<{
+        admin: "admin";
+        manager: "manager";
+        staff: "staff";
+        viewer: "viewer";
+    }>;
+    permissions: z.ZodOptional<z.ZodArray<z.ZodString>>;
+}, z.core.$strip>;
 export declare const updateTeamMemberSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
-    role: z.ZodOptional<z.ZodEnum<["admin", "manager", "agent"]>>;
-    permissions: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+    role: z.ZodOptional<z.ZodEnum<{
+        admin: "admin";
+        manager: "manager";
+        staff: "staff";
+        viewer: "viewer";
+    }>>;
+    permissions: z.ZodOptional<z.ZodArray<z.ZodString>>;
     isActive: z.ZodOptional<z.ZodBoolean>;
-}, "strip", z.ZodTypeAny, {
-    isActive?: boolean | undefined;
-    name?: string | undefined;
-    role?: "admin" | "manager" | "agent" | undefined;
-    permissions?: string[] | undefined;
-}, {
-    isActive?: boolean | undefined;
-    name?: string | undefined;
-    role?: "admin" | "manager" | "agent" | undefined;
-    permissions?: string[] | undefined;
-}>;
+}, z.core.$strip>;
 export declare const teamQuerySchema: z.ZodObject<{
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-}, {
-    page?: number | undefined;
-    limit?: number | undefined;
-}>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
 export declare const registerSchema: z.ZodObject<{
     email: z.ZodString;
     password: z.ZodString;
     agencyName: z.ZodString;
     phone: z.ZodOptional<z.ZodString>;
     timezone: z.ZodDefault<z.ZodOptional<z.ZodString>>;
-}, "strip", z.ZodTypeAny, {
-    email: string;
-    password: string;
-    agencyName: string;
-    timezone: string;
-    phone?: string | undefined;
-}, {
-    email: string;
-    password: string;
-    agencyName: string;
-    phone?: string | undefined;
-    timezone?: string | undefined;
-}>;
+}, z.core.$strip>;
 export declare const loginSchema: z.ZodObject<{
     email: z.ZodString;
     password: z.ZodString;
-}, "strip", z.ZodTypeAny, {
-    email: string;
-    password: string;
-}, {
-    email: string;
-    password: string;
-}>;
-export declare const whatsappConfigSchema: z.ZodDiscriminatedUnion<"provider", [z.ZodObject<{
+}, z.core.$strip>;
+export declare const whatsappConfigSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     provider: z.ZodLiteral<"meta">;
     accessToken: z.ZodString;
     phoneNumberId: z.ZodString;
     businessAccountId: z.ZodNullable<z.ZodOptional<z.ZodString>>;
-}, "strip", z.ZodTypeAny, {
-    provider: "meta";
-    accessToken: string;
-    phoneNumberId: string;
-    businessAccountId?: string | null | undefined;
-}, {
-    provider: "meta";
-    accessToken: string;
-    phoneNumberId: string;
-    businessAccountId?: string | null | undefined;
-}>, z.ZodObject<{
+}, z.core.$strip>, z.ZodObject<{
     provider: z.ZodLiteral<"ultramsg">;
     ultramsgInstanceId: z.ZodString;
     ultramsgToken: z.ZodString;
-}, "strip", z.ZodTypeAny, {
-    provider: "ultramsg";
-    ultramsgInstanceId: string;
-    ultramsgToken: string;
-}, {
-    provider: "ultramsg";
-    ultramsgInstanceId: string;
-    ultramsgToken: string;
-}>]>;
+}, z.core.$strip>], "provider">;
 export declare const testMessageSchema: z.ZodObject<{
     phoneNumber: z.ZodString;
     message: z.ZodOptional<z.ZodString>;
-}, "strip", z.ZodTypeAny, {
-    phoneNumber: string;
-    message?: string | undefined;
-}, {
-    phoneNumber: string;
-    message?: string | undefined;
-}>;
+}, z.core.$strip>;
 export declare const cloudinaryConfigSchema: z.ZodObject<{
     cloudName: z.ZodString;
     apiKey: z.ZodString;
     apiSecret: z.ZodString;
-}, "strip", z.ZodTypeAny, {
-    cloudName: string;
-    apiKey: string;
-    apiSecret: string;
-}, {
-    cloudName: string;
-    apiKey: string;
-    apiSecret: string;
-}>;
+}, z.core.$strip>;
 export declare const updateProfileSchema: z.ZodObject<{
     agencyName: z.ZodOptional<z.ZodString>;
     phone: z.ZodOptional<z.ZodString>;
     timezone: z.ZodOptional<z.ZodString>;
-}, "strip", z.ZodTypeAny, {
-    agencyName?: string | undefined;
-    phone?: string | undefined;
-    timezone?: string | undefined;
-}, {
-    agencyName?: string | undefined;
-    phone?: string | undefined;
-    timezone?: string | undefined;
-}>;
+}, z.core.$strip>;
 export declare const uploadSchema: z.ZodObject<{
     base64: z.ZodString;
     fileName: z.ZodDefault<z.ZodOptional<z.ZodString>>;
     folder: z.ZodDefault<z.ZodOptional<z.ZodString>>;
-}, "strip", z.ZodTypeAny, {
-    base64: string;
-    fileName: string;
-    folder: string;
-}, {
-    base64: string;
-    fileName?: string | undefined;
-    folder?: string | undefined;
-}>;
+}, z.core.$strip>;
 export declare const sendMessageSchema: z.ZodObject<{
     message: z.ZodString;
-}, "strip", z.ZodTypeAny, {
-    message: string;
-}, {
-    message: string;
-}>;
+}, z.core.$strip>;
 export declare const groupTypes: readonly ["static", "dynamic"];
 export declare const createGroupSchema: z.ZodObject<{
     name: z.ZodString;
-    type: z.ZodEnum<["static", "dynamic"]>;
-    customerIds: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>;
+    type: z.ZodEnum<{
+        static: "static";
+        dynamic: "dynamic";
+    }>;
+    customerIds: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>;
     filters: z.ZodOptional<z.ZodObject<{
-        tagIds: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        tagIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         passportExpiryWithin: z.ZodOptional<z.ZodNumber>;
         visaExpiryWithin: z.ZodOptional<z.ZodNumber>;
         hasAnniversaryWithin: z.ZodOptional<z.ZodNumber>;
         isBirthdayWithin: z.ZodOptional<z.ZodNumber>;
-    }, "strip", z.ZodTypeAny, {
-        tagIds?: string[] | undefined;
-        passportExpiryWithin?: number | undefined;
-        visaExpiryWithin?: number | undefined;
-        hasAnniversaryWithin?: number | undefined;
-        isBirthdayWithin?: number | undefined;
-    }, {
-        tagIds?: string[] | undefined;
-        passportExpiryWithin?: number | undefined;
-        visaExpiryWithin?: number | undefined;
-        hasAnniversaryWithin?: number | undefined;
-        isBirthdayWithin?: number | undefined;
-    }>>;
-}, "strip", z.ZodTypeAny, {
-    type: "static" | "dynamic";
-    customerIds: string[];
-    name: string;
-    filters?: {
-        tagIds?: string[] | undefined;
-        passportExpiryWithin?: number | undefined;
-        visaExpiryWithin?: number | undefined;
-        hasAnniversaryWithin?: number | undefined;
-        isBirthdayWithin?: number | undefined;
-    } | undefined;
-}, {
-    type: "static" | "dynamic";
-    name: string;
-    customerIds?: string[] | undefined;
-    filters?: {
-        tagIds?: string[] | undefined;
-        passportExpiryWithin?: number | undefined;
-        visaExpiryWithin?: number | undefined;
-        hasAnniversaryWithin?: number | undefined;
-        isBirthdayWithin?: number | undefined;
-    } | undefined;
-}>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
 export declare const updateGroupSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
-    type: z.ZodOptional<z.ZodEnum<["static", "dynamic"]>>;
-    customerIds: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString, "many">>>>;
+    type: z.ZodOptional<z.ZodEnum<{
+        static: "static";
+        dynamic: "dynamic";
+    }>>;
+    customerIds: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodString>>>>;
     filters: z.ZodOptional<z.ZodOptional<z.ZodObject<{
-        tagIds: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
+        tagIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         passportExpiryWithin: z.ZodOptional<z.ZodNumber>;
         visaExpiryWithin: z.ZodOptional<z.ZodNumber>;
         hasAnniversaryWithin: z.ZodOptional<z.ZodNumber>;
         isBirthdayWithin: z.ZodOptional<z.ZodNumber>;
-    }, "strip", z.ZodTypeAny, {
-        tagIds?: string[] | undefined;
-        passportExpiryWithin?: number | undefined;
-        visaExpiryWithin?: number | undefined;
-        hasAnniversaryWithin?: number | undefined;
-        isBirthdayWithin?: number | undefined;
-    }, {
-        tagIds?: string[] | undefined;
-        passportExpiryWithin?: number | undefined;
-        visaExpiryWithin?: number | undefined;
-        hasAnniversaryWithin?: number | undefined;
-        isBirthdayWithin?: number | undefined;
-    }>>>;
-}, "strip", z.ZodTypeAny, {
-    type?: "static" | "dynamic" | undefined;
-    customerIds?: string[] | undefined;
-    name?: string | undefined;
-    filters?: {
-        tagIds?: string[] | undefined;
-        passportExpiryWithin?: number | undefined;
-        visaExpiryWithin?: number | undefined;
-        hasAnniversaryWithin?: number | undefined;
-        isBirthdayWithin?: number | undefined;
-    } | undefined;
-}, {
-    type?: "static" | "dynamic" | undefined;
-    customerIds?: string[] | undefined;
-    name?: string | undefined;
-    filters?: {
-        tagIds?: string[] | undefined;
-        passportExpiryWithin?: number | undefined;
-        visaExpiryWithin?: number | undefined;
-        hasAnniversaryWithin?: number | undefined;
-        isBirthdayWithin?: number | undefined;
-    } | undefined;
-}>;
+    }, z.core.$strip>>>;
+}, z.core.$strip>;
 export declare const groupQuerySchema: z.ZodObject<{
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-}, {
-    page?: number | undefined;
-    limit?: number | undefined;
-}>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
 export declare const leadStatuses: readonly ["new", "contacted", "qualified", "converted", "lost"];
 export declare const createLeadSchema: z.ZodObject<{
     fullName: z.ZodString;
     whatsappNumber: z.ZodString;
     email: z.ZodNullable<z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodLiteral<"">]>>>;
-    status: z.ZodDefault<z.ZodOptional<z.ZodEnum<["new", "contacted", "qualified", "converted", "lost"]>>>;
+    status: z.ZodDefault<z.ZodOptional<z.ZodEnum<{
+        new: "new";
+        contacted: "contacted";
+        qualified: "qualified";
+        converted: "converted";
+        lost: "lost";
+    }>>>;
     source: z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>;
     notes: z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>;
-}, "strip", z.ZodTypeAny, {
-    fullName: string;
-    whatsappNumber: string;
-    status: "new" | "contacted" | "qualified" | "converted" | "lost";
-    email?: string | null | undefined;
-    notes?: string | undefined;
-    source?: string | undefined;
-}, {
-    fullName: string;
-    whatsappNumber: string;
-    email?: string | null | undefined;
-    status?: "new" | "contacted" | "qualified" | "converted" | "lost" | undefined;
-    notes?: string | undefined;
-    source?: string | undefined;
-}>;
+}, z.core.$strip>;
 export declare const updateLeadSchema: z.ZodObject<{
     fullName: z.ZodOptional<z.ZodString>;
     whatsappNumber: z.ZodOptional<z.ZodString>;
     email: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodLiteral<"">]>>>>;
-    status: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodEnum<["new", "contacted", "qualified", "converted", "lost"]>>>>;
+    status: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodEnum<{
+        new: "new";
+        contacted: "contacted";
+        qualified: "qualified";
+        converted: "converted";
+        lost: "lost";
+    }>>>>;
     source: z.ZodOptional<z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>>;
     notes: z.ZodOptional<z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>>;
-}, "strip", z.ZodTypeAny, {
-    email?: string | null | undefined;
-    fullName?: string | undefined;
-    whatsappNumber?: string | undefined;
-    status?: "new" | "contacted" | "qualified" | "converted" | "lost" | undefined;
-    notes?: string | undefined;
-    source?: string | undefined;
-}, {
-    email?: string | null | undefined;
-    fullName?: string | undefined;
-    whatsappNumber?: string | undefined;
-    status?: "new" | "contacted" | "qualified" | "converted" | "lost" | undefined;
-    notes?: string | undefined;
-    source?: string | undefined;
-}>;
+}, z.core.$strip>;
 export declare const leadQuerySchema: z.ZodObject<{
-    status: z.ZodOptional<z.ZodEnum<["new", "contacted", "qualified", "converted", "lost"]>>;
+    status: z.ZodOptional<z.ZodEnum<{
+        new: "new";
+        contacted: "contacted";
+        qualified: "qualified";
+        converted: "converted";
+        lost: "lost";
+    }>>;
     search: z.ZodOptional<z.ZodString>;
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    status?: "new" | "contacted" | "qualified" | "converted" | "lost" | undefined;
-    search?: string | undefined;
-}, {
-    status?: "new" | "contacted" | "qualified" | "converted" | "lost" | undefined;
-    search?: string | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
-}>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
 export declare const createPipelineStageSchema: z.ZodObject<{
     name: z.ZodString;
     color: z.ZodDefault<z.ZodOptional<z.ZodString>>;
     order: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    name: string;
-    color: string;
-    order: number;
-}, {
-    name: string;
-    color?: string | undefined;
-    order?: number | undefined;
-}>;
+}, z.core.$strip>;
 export declare const updatePipelineStageSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
     color: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodString>>>;
     order: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodNumber>>>;
-}, "strip", z.ZodTypeAny, {
-    name?: string | undefined;
-    color?: string | undefined;
-    order?: number | undefined;
-}, {
-    name?: string | undefined;
-    color?: string | undefined;
-    order?: number | undefined;
-}>;
+}, z.core.$strip>;
 export declare const createDealSchema: z.ZodObject<{
     title: z.ZodString;
     value: z.ZodNumber;
@@ -692,25 +368,7 @@ export declare const createDealSchema: z.ZodObject<{
     customerId: z.ZodNullable<z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodLiteral<"">]>>>;
     expectedCloseDate: z.ZodNullable<z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodLiteral<"">]>>>;
     notes: z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>;
-}, "strip", z.ZodTypeAny, {
-    value: number;
-    title: string;
-    currency: string;
-    stageId: string;
-    notes?: string | undefined;
-    customerId?: string | null | undefined;
-    leadId?: string | null | undefined;
-    expectedCloseDate?: string | null | undefined;
-}, {
-    value: number;
-    title: string;
-    stageId: string;
-    notes?: string | undefined;
-    customerId?: string | null | undefined;
-    currency?: string | undefined;
-    leadId?: string | null | undefined;
-    expectedCloseDate?: string | null | undefined;
-}>;
+}, z.core.$strip>;
 export declare const updateDealSchema: z.ZodObject<{
     title: z.ZodOptional<z.ZodString>;
     value: z.ZodOptional<z.ZodNumber>;
@@ -720,309 +378,164 @@ export declare const updateDealSchema: z.ZodObject<{
     customerId: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodLiteral<"">]>>>>;
     expectedCloseDate: z.ZodOptional<z.ZodNullable<z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodLiteral<"">]>>>>;
     notes: z.ZodOptional<z.ZodUnion<[z.ZodOptional<z.ZodString>, z.ZodLiteral<"">]>>;
-}, "strip", z.ZodTypeAny, {
-    value?: number | undefined;
-    notes?: string | undefined;
-    customerId?: string | null | undefined;
-    title?: string | undefined;
-    currency?: string | undefined;
-    stageId?: string | undefined;
-    leadId?: string | null | undefined;
-    expectedCloseDate?: string | null | undefined;
-}, {
-    value?: number | undefined;
-    notes?: string | undefined;
-    customerId?: string | null | undefined;
-    title?: string | undefined;
-    currency?: string | undefined;
-    stageId?: string | undefined;
-    leadId?: string | null | undefined;
-    expectedCloseDate?: string | null | undefined;
-}>;
+}, z.core.$strip>;
 export declare const dealQuerySchema: z.ZodObject<{
     stageId: z.ZodOptional<z.ZodString>;
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    stageId?: string | undefined;
-}, {
-    page?: number | undefined;
-    limit?: number | undefined;
-    stageId?: string | undefined;
-}>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
 export declare const workflowTriggerTypes: readonly ["customer_created", "lead_created", "lead_converted", "deal_won", "tag_added"];
-export declare const workflowActionTypes: readonly ["send_whatsapp", "add_tag", "create_reminder"];
+export declare const workflowActionTypes: readonly ["send_whatsapp", "send_email", "add_tag", "create_reminder"];
 export declare const createWorkflowSchema: z.ZodObject<{
     name: z.ZodString;
     description: z.ZodOptional<z.ZodString>;
-    triggerType: z.ZodEnum<["customer_created", "lead_created", "lead_converted", "deal_won", "tag_added"]>;
+    triggerType: z.ZodEnum<{
+        customer_created: "customer_created";
+        lead_created: "lead_created";
+        lead_converted: "lead_converted";
+        deal_won: "deal_won";
+        tag_added: "tag_added";
+    }>;
     conditions: z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodObject<{
         field: z.ZodString;
-        operator: z.ZodEnum<["equals", "not_equals", "contains", "greater_than", "less_than"]>;
-        value: z.ZodUnion<[z.ZodString, z.ZodNumber, z.ZodBoolean]>;
-    }, "strip", z.ZodTypeAny, {
-        value: string | number | boolean;
-        field: string;
-        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
-    }, {
-        value: string | number | boolean;
-        field: string;
-        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
-    }>, "many">>>;
+        operator: z.ZodEnum<{
+            equals: "equals";
+            not_equals: "not_equals";
+            contains: "contains";
+            greater_than: "greater_than";
+            less_than: "less_than";
+        }>;
+        value: z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>;
+    }, z.core.$strip>>>>;
     actions: z.ZodArray<z.ZodObject<{
-        type: z.ZodEnum<["send_whatsapp", "add_tag", "create_reminder"]>;
+        type: z.ZodEnum<{
+            send_whatsapp: "send_whatsapp";
+            send_email: "send_email";
+            add_tag: "add_tag";
+            create_reminder: "create_reminder";
+        }>;
         config: z.ZodRecord<z.ZodString, z.ZodAny>;
-    }, "strip", z.ZodTypeAny, {
-        type: "send_whatsapp" | "add_tag" | "create_reminder";
-        config: Record<string, any>;
-    }, {
-        type: "send_whatsapp" | "add_tag" | "create_reminder";
-        config: Record<string, any>;
-    }>, "many">;
+    }, z.core.$strip>>;
     isActive: z.ZodDefault<z.ZodOptional<z.ZodBoolean>>;
-}, "strip", z.ZodTypeAny, {
-    isActive: boolean;
-    name: string;
-    triggerType: "customer_created" | "lead_created" | "lead_converted" | "deal_won" | "tag_added";
-    conditions: {
-        value: string | number | boolean;
-        field: string;
-        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
-    }[];
-    actions: {
-        type: "send_whatsapp" | "add_tag" | "create_reminder";
-        config: Record<string, any>;
-    }[];
-    description?: string | undefined;
-}, {
-    name: string;
-    triggerType: "customer_created" | "lead_created" | "lead_converted" | "deal_won" | "tag_added";
-    actions: {
-        type: "send_whatsapp" | "add_tag" | "create_reminder";
-        config: Record<string, any>;
-    }[];
-    isActive?: boolean | undefined;
-    description?: string | undefined;
-    conditions?: {
-        value: string | number | boolean;
-        field: string;
-        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
-    }[] | undefined;
-}>;
+}, z.core.$strip>;
 export declare const updateWorkflowSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
     description: z.ZodOptional<z.ZodOptional<z.ZodString>>;
-    triggerType: z.ZodOptional<z.ZodEnum<["customer_created", "lead_created", "lead_converted", "deal_won", "tag_added"]>>;
+    triggerType: z.ZodOptional<z.ZodEnum<{
+        customer_created: "customer_created";
+        lead_created: "lead_created";
+        lead_converted: "lead_converted";
+        deal_won: "deal_won";
+        tag_added: "tag_added";
+    }>>;
     conditions: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodArray<z.ZodObject<{
         field: z.ZodString;
-        operator: z.ZodEnum<["equals", "not_equals", "contains", "greater_than", "less_than"]>;
-        value: z.ZodUnion<[z.ZodString, z.ZodNumber, z.ZodBoolean]>;
-    }, "strip", z.ZodTypeAny, {
-        value: string | number | boolean;
-        field: string;
-        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
-    }, {
-        value: string | number | boolean;
-        field: string;
-        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
-    }>, "many">>>>;
+        operator: z.ZodEnum<{
+            equals: "equals";
+            not_equals: "not_equals";
+            contains: "contains";
+            greater_than: "greater_than";
+            less_than: "less_than";
+        }>;
+        value: z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>;
+    }, z.core.$strip>>>>>;
     actions: z.ZodOptional<z.ZodArray<z.ZodObject<{
-        type: z.ZodEnum<["send_whatsapp", "add_tag", "create_reminder"]>;
+        type: z.ZodEnum<{
+            send_whatsapp: "send_whatsapp";
+            send_email: "send_email";
+            add_tag: "add_tag";
+            create_reminder: "create_reminder";
+        }>;
         config: z.ZodRecord<z.ZodString, z.ZodAny>;
-    }, "strip", z.ZodTypeAny, {
-        type: "send_whatsapp" | "add_tag" | "create_reminder";
-        config: Record<string, any>;
-    }, {
-        type: "send_whatsapp" | "add_tag" | "create_reminder";
-        config: Record<string, any>;
-    }>, "many">>;
+    }, z.core.$strip>>>;
     isActive: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodBoolean>>>;
-}, "strip", z.ZodTypeAny, {
-    isActive?: boolean | undefined;
-    name?: string | undefined;
-    description?: string | undefined;
-    triggerType?: "customer_created" | "lead_created" | "lead_converted" | "deal_won" | "tag_added" | undefined;
-    conditions?: {
-        value: string | number | boolean;
-        field: string;
-        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
-    }[] | undefined;
-    actions?: {
-        type: "send_whatsapp" | "add_tag" | "create_reminder";
-        config: Record<string, any>;
-    }[] | undefined;
-}, {
-    isActive?: boolean | undefined;
-    name?: string | undefined;
-    description?: string | undefined;
-    triggerType?: "customer_created" | "lead_created" | "lead_converted" | "deal_won" | "tag_added" | undefined;
-    conditions?: {
-        value: string | number | boolean;
-        field: string;
-        operator: "equals" | "not_equals" | "contains" | "greater_than" | "less_than";
-    }[] | undefined;
-    actions?: {
-        type: "send_whatsapp" | "add_tag" | "create_reminder";
-        config: Record<string, any>;
-    }[] | undefined;
-}>;
+}, z.core.$strip>;
 export declare const workflowQuerySchema: z.ZodObject<{
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
     isActive: z.ZodOptional<z.ZodBoolean>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    isActive?: boolean | undefined;
-}, {
-    isActive?: boolean | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
-}>;
-export declare const emailConfigSchema: z.ZodDiscriminatedUnion<"provider", [z.ZodObject<{
+}, z.core.$strip>;
+export declare const emailConfigSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     provider: z.ZodLiteral<"sendgrid">;
     apiKey: z.ZodString;
     fromEmail: z.ZodString;
     fromName: z.ZodOptional<z.ZodString>;
-}, "strip", z.ZodTypeAny, {
-    provider: "sendgrid";
-    apiKey: string;
-    fromEmail: string;
-    fromName?: string | undefined;
-}, {
-    provider: "sendgrid";
-    apiKey: string;
-    fromEmail: string;
-    fromName?: string | undefined;
-}>, z.ZodObject<{
+}, z.core.$strip>, z.ZodObject<{
     provider: z.ZodLiteral<"smtp">;
     host: z.ZodString;
-    port: z.ZodNumber;
+    port: z.ZodCoercedNumber<unknown>;
     user: z.ZodString;
     pass: z.ZodString;
     fromEmail: z.ZodString;
     fromName: z.ZodOptional<z.ZodString>;
-}, "strip", z.ZodTypeAny, {
-    provider: "smtp";
-    fromEmail: string;
-    host: string;
-    port: number;
-    user: string;
-    pass: string;
-    fromName?: string | undefined;
-}, {
-    provider: "smtp";
-    fromEmail: string;
-    host: string;
-    port: number;
-    user: string;
-    pass: string;
-    fromName?: string | undefined;
-}>, z.ZodObject<{
+}, z.core.$strip>, z.ZodObject<{
     provider: z.ZodLiteral<"ses">;
     apiKey: z.ZodString;
     apiSecret: z.ZodString;
     region: z.ZodDefault<z.ZodOptional<z.ZodString>>;
     fromEmail: z.ZodString;
-}, "strip", z.ZodTypeAny, {
-    provider: "ses";
-    apiKey: string;
-    apiSecret: string;
-    fromEmail: string;
-    region: string;
-}, {
-    provider: "ses";
-    apiKey: string;
-    apiSecret: string;
-    fromEmail: string;
-    region?: string | undefined;
-}>, z.ZodObject<{
+}, z.core.$strip>, z.ZodObject<{
     provider: z.ZodLiteral<"gmail">;
     fromEmail: z.ZodOptional<z.ZodString>;
     fromName: z.ZodOptional<z.ZodString>;
-}, "strip", z.ZodTypeAny, {
-    provider: "gmail";
-    fromEmail?: string | undefined;
-    fromName?: string | undefined;
-}, {
-    provider: "gmail";
-    fromEmail?: string | undefined;
-    fromName?: string | undefined;
-}>, z.ZodObject<{
+}, z.core.$strip>, z.ZodObject<{
     provider: z.ZodLiteral<"gmail_smtp">;
     fromEmail: z.ZodString;
     pass: z.ZodString;
     user: z.ZodOptional<z.ZodString>;
     fromName: z.ZodOptional<z.ZodString>;
-}, "strip", z.ZodTypeAny, {
-    provider: "gmail_smtp";
-    fromEmail: string;
-    pass: string;
-    fromName?: string | undefined;
-    user?: string | undefined;
-}, {
-    provider: "gmail_smtp";
-    fromEmail: string;
-    pass: string;
-    fromName?: string | undefined;
-    user?: string | undefined;
-}>, z.ZodObject<{
+}, z.core.$strip>, z.ZodObject<{
     provider: z.ZodLiteral<null>;
-}, "strip", z.ZodTypeAny, {
-    provider: null;
-}, {
-    provider: null;
-}>]>;
+}, z.core.$strip>], "provider">;
 export declare const createEmailTemplateSchema: z.ZodObject<{
     name: z.ZodString;
     subject: z.ZodString;
-    type: z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>;
+    type: z.ZodEnum<{
+        birthday: "birthday";
+        anniversary: "anniversary";
+        passport_expiry: "passport_expiry";
+        visa_expiry: "visa_expiry";
+        trip: "trip";
+        custom: "custom";
+    }>;
     content: z.ZodString;
     isDefault: z.ZodDefault<z.ZodOptional<z.ZodBoolean>>;
-}, "strip", z.ZodTypeAny, {
-    type: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom";
-    name: string;
-    content: string;
-    isDefault: boolean;
-    subject: string;
-}, {
-    type: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom";
-    name: string;
-    content: string;
-    subject: string;
-    isDefault?: boolean | undefined;
-}>;
+}, z.core.$strip>;
 export declare const updateEmailTemplateSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
     subject: z.ZodOptional<z.ZodString>;
-    type: z.ZodOptional<z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>>;
+    type: z.ZodOptional<z.ZodEnum<{
+        birthday: "birthday";
+        anniversary: "anniversary";
+        passport_expiry: "passport_expiry";
+        visa_expiry: "visa_expiry";
+        trip: "trip";
+        custom: "custom";
+    }>>;
     content: z.ZodOptional<z.ZodString>;
     isDefault: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodBoolean>>>;
-}, "strip", z.ZodTypeAny, {
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    name?: string | undefined;
-    content?: string | undefined;
-    isDefault?: boolean | undefined;
-    subject?: string | undefined;
-}, {
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    name?: string | undefined;
-    content?: string | undefined;
-    isDefault?: boolean | undefined;
-    subject?: string | undefined;
-}>;
+}, z.core.$strip>;
 export declare const emailTemplateQuerySchema: z.ZodObject<{
-    type: z.ZodOptional<z.ZodEnum<["birthday", "anniversary", "passport_expiry", "visa_expiry", "trip", "custom"]>>;
-    page: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-    limit: z.ZodDefault<z.ZodOptional<z.ZodNumber>>;
-}, "strip", z.ZodTypeAny, {
-    page: number;
-    limit: number;
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-}, {
-    type?: "birthday" | "anniversary" | "passport_expiry" | "visa_expiry" | "trip" | "custom" | undefined;
-    page?: number | undefined;
-    limit?: number | undefined;
-}>;
+    type: z.ZodOptional<z.ZodEnum<{
+        birthday: "birthday";
+        anniversary: "anniversary";
+        passport_expiry: "passport_expiry";
+        visa_expiry: "visa_expiry";
+        trip: "trip";
+        custom: "custom";
+    }>>;
+    page: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+    limit: z.ZodDefault<z.ZodOptional<z.ZodCoercedNumber<unknown>>>;
+}, z.core.$strip>;
+export declare const createWebhookSchema: z.ZodObject<{
+    targetUrl: z.ZodString;
+    events: z.ZodArray<z.ZodString>;
+    isActive: z.ZodDefault<z.ZodOptional<z.ZodBoolean>>;
+    secretKey: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const updateWebhookSchema: z.ZodObject<{
+    targetUrl: z.ZodOptional<z.ZodString>;
+    events: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    isActive: z.ZodOptional<z.ZodDefault<z.ZodOptional<z.ZodBoolean>>>;
+    secretKey: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+}, z.core.$strip>;

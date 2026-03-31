@@ -1,2 +1,2 @@
 // Shared TypeScript Interfaces
-export {};
+export const teamRoles = ['admin', 'manager', 'staff', 'viewer'];

@@ -18,7 +18,7 @@ export const customerQuerySchema = z.object({
     search: z.string().optional(),
     tagId: z.string().optional(),
     page: z.coerce.number().int().positive().optional().default(1),
-    limit: z.coerce.number().int().positive().max(100).optional().default(20),
+    limit: z.coerce.number().int().positive().max(1000).optional().default(20),
 });
 // Reminder validation schemas
 export const reminderTypes = ['birthday', 'anniversary', 'passport_expiry', 'visa_expiry', 'trip', 'custom'];
@@ -105,7 +105,7 @@ export const activityQuerySchema = z.object({
     limit: z.coerce.number().int().positive().max(100).optional().default(20),
 });
 // Team member validation schemas
-export const teamRoles = ['admin', 'manager', 'agent'];
+export const teamRoles = ['admin', 'manager', 'staff', 'viewer'];
 export const inviteTeamMemberSchema = z.object({
     email: z.string().email('Valid email is required'),
     name: z.string().min(1, 'Name is required').max(100),
@@ -236,7 +236,7 @@ export const dealQuerySchema = z.object({
 });
 // Workflow validation schemas
 export const workflowTriggerTypes = ['customer_created', 'lead_created', 'lead_converted', 'deal_won', 'tag_added'];
-export const workflowActionTypes = ['send_whatsapp', 'add_tag', 'create_reminder'];
+export const workflowActionTypes = ['send_whatsapp', 'send_email', 'add_tag', 'create_reminder'];
 export const createWorkflowSchema = z.object({
     name: z.string().min(1, 'Name is required').max(150),
     description: z.string().max(1000).optional(),
@@ -311,3 +311,11 @@ export const emailTemplateQuerySchema = z.object({
     page: z.coerce.number().int().positive().optional().default(1),
     limit: z.coerce.number().int().positive().max(100).optional().default(50),
 });
+// Webhook validation schemas
+export const createWebhookSchema = z.object({
+    targetUrl: z.string().url('A valid URL is required'),
+    events: z.array(z.string()).min(1, 'Select at least one event'),
+    isActive: z.boolean().optional().default(true),
+    secretKey: z.string().max(100).optional(),
+});
+export const updateWebhookSchema = createWebhookSchema.partial();
