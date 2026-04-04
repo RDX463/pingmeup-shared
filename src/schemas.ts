@@ -9,10 +9,11 @@ export const createCustomerSchema = z.object({
     anniversaryDate: z.string().datetime().optional().nullable(),
     passportNumber: z.string().max(50).optional(),
     visaNumber: z.string().max(50).optional(),
-    passportExpiry: z.string().datetime().optional().nullable(),
-    visaExpiry: z.string().datetime().optional().nullable(),
+    passportExpiry: z.string().optional().nullable(),
+    visaExpiry: z.string().optional().nullable(),
     notes: z.string().max(1000).optional(),
-    isActive: z.boolean().optional().default(true),
+    isActive: z.boolean().default(true),
+    tagIds: z.array(z.string()).optional(),
 });
 
 export const updateCustomerSchema = createCustomerSchema.partial();

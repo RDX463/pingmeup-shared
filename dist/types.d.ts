@@ -175,8 +175,12 @@ export interface IWorkflowCondition {
     value: string | number | boolean;
 }
 export interface IWorkflowAction {
-    type: 'send_whatsapp' | 'send_email' | 'add_tag' | 'create_reminder';
+    id?: string;
+    type: 'send_whatsapp' | 'send_email' | 'add_tag' | 'create_reminder' | 'wait' | 'condition' | 'smart_reply';
     config: Record<string, string | number | boolean | undefined>;
+    nextId?: string;
+    trueId?: string;
+    falseId?: string;
 }
 export interface IWorkflow {
     _id: string;
