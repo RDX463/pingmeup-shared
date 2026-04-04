@@ -282,7 +282,7 @@ export const dealQuerySchema = z.object({
 });
 
 // Workflow validation schemas
-export const workflowTriggerTypes = ['customer_created', 'lead_created', 'lead_converted', 'deal_won', 'tag_added'] as const;
+export const workflowTriggerTypes = ['customer_created', 'lead_created', 'lead_converted', 'deal_won', 'tag_added', 'manual'] as const;
 export const workflowActionTypes = ['send_whatsapp', 'send_email', 'add_tag', 'create_reminder'] as const;
 
 export const createWorkflowSchema = z.object({

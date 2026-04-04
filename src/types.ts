@@ -206,7 +206,7 @@ export interface IWorkflow {
     userId: string;
     name: string;
     description?: string;
-    triggerType: 'customer_created' | 'lead_created' | 'lead_converted' | 'deal_won' | 'tag_added';
+    triggerType: 'customer_created' | 'lead_created' | 'lead_converted' | 'deal_won' | 'tag_added' | 'manual';
     conditions: IWorkflowCondition[];
     actions: IWorkflowAction[];
     isActive: boolean;
